@@ -1,106 +1,103 @@
 local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
- 
-local Window = OrionLib:MakeWindow({Name = "BLADE BALL", HidePremium = false, IntroText = "MADE BY JONKS", SaveConfig = true, ConfigFolder = "Blade Ball"})
- 
+
+local Window = OrionLib:MakeWindow({Name = "Script by Swordikk | ⚡Gym leagua", HidePremium = false, IntroText = "Script for Gym leagua", SaveConfig = true, IntroEnabled = true, ConfigFolder = "Scripts"})
+
+local Humanoid = game.Players.LocalPlayer.Character.Humanoid
+local HumanoidRootPart = game.Players.LocalPlayer.Character.HumanoidRootPart
+
+function AutoFarmDiamonds()
+	while _G.AutoFarmDiamonds == true do
+		for i, v in pairs(game:GetService("Workspace"):WaitForChild("__THINGS").Coins:GetChildren()) do
+            if (HumanoidRootPart.Position - v.Coin.Position).magnitude < 200 and (
+				v.Coin.MeshId == "rbxassetid://13087914804" or 
+				v.Coin.MeshId == "rbxassetid://13087826929" or 
+				v.Coin.MeshId == "rbxassetid://13087884875"or 
+				v.Coin.MeshId == "rbxassetid://6356575794") then
+                HumanoidRootPart.CFrame = v.Coin.CFrame
+			else
+				for i, v in pairs(game:GetService("Workspace"):WaitForChild("__THINGS").Lootbags:GetChildren()) do
+					HumanoidRootPart.CFrame = v.CFrame
+				end
+            end
+		end
+	end
+end
+
+function WalkSpeed()
+	while _G.WalkSpeed do game:GetService("RunService").RenderStepped:wait()
+	    Humanoid.WalkSpeed = _G.WalkSpeed
+    end
+end
+
+function JumpPower()
+	while _G.JumpPower do game:GetService("RunService").RenderStepped:wait()
+	    Humanoid.JumpPower = _G.JumpPower
+    end
+end
+
 local Tab = Window:MakeTab({
-	Name = "IMPORTANT",
-	Icon = "rbxassetid://13908444327",
+	Name = "AutoFarm",
+	Icon = "rbxassetid://4483362748",
 	PremiumOnly = false
 })
- 
-local Section = Tab:AddSection({
-	Name = "add my discord realjonk"
+
+Tab:AddTextbox({
+	Name = "AutoFarm Diamonds",
+	Default = "",
+	TextDisappear = false,
+	Callback = function(Value)
+		_G.AutoFarmDiamonds = Value
+		AutoFarmDiamonds()
+	end
 })
- 
-Tab:AddButton({
-	Name = "Auto Click",
-	Callback = function()
-      		local player = game.Players.LocalPlayer
-		local character = player.Character or player.CharacterAdded:Wait()
-		local replicatedStorage = game:GetService("ReplicatedStorage")
-		local runService = game:GetService("RunService")
-		local parryButtonPress = replicatedStorage.Remotes.ParryButtonPress
-		local ballsFolder = workspace:WaitForChild("Balls")
-		
-		print("Script successfully ran.")
-		
-		local function onCharacterAdded(newCharacter)
-		    character = newCharacter
+
+local Tab = Window:MakeTab({
+	Name = "Misc",
+	Icon = "rbxassetid://4483362748",
+	PremiumOnly = false
+})
+
+Tab:AddTextbox({
+	Name = "WalkSpeed",
+	Default = "",
+	TextDisappear = false,
+	Callback = function(Value)
+		_G.WalkSpeed = Value
+		WalkSpeed()
+	end
+})
+
+Tab:AddTextbox({
+	Name = "JumpPower",
+	Default = "",
+	TextDisappear = false,
+	Callback = function(Value)
+		_G.JumpPower = Value
+		JumpPower()
+	end
+})
+
+Tab:AddToggle({
+	Name = "Anti-AFK",
+	Default = false,
+	Callback = function(Value)
+		if Value == true then
+			while not game:IsLoaded() do wait() end
+			repeat wait() until game.Players.LocalPlayer.Character
+			Players = game:GetService("Players")
+			local GC = getconnections or get_signal_cons
+			if GC then
+				for i,v in pairs(GC(Players.LocalPlayer.Idled)) do
+					if v["Disable"] then v["Disable"](v)
+					elseif v["Disconnect"] then v["Disconnect"](v)
+					end
+				end
+			else
+			Players.LocalPlayer.Idled:Connect(function()
+				VirtualUser:CaptureController()
+				VirtualUser:ClickButton2(Vector2.new())
+  				end)
+			end
 		end
-		
-		player.CharacterAdded:Connect(onCharacterAdded)
-		
-		local focusedBall = nil  
-		
-		local function chooseNewFocusedBall()
-		    local balls = ballsFolder:GetChildren()
-		    focusedBall = nil
-		    for _, ball in ipairs(balls) do
-		        if ball:GetAttribute("realBall") == true then
-		            focusedBall = ball
-		            break
-		        end
-		    end
-		end
-		
-		chooseNewFocusedBall()
-		
-		local function timeUntilImpact(ballVelocity, distanceToPlayer, playerVelocity)
-		    local directionToPlayer = (character.HumanoidRootPart.Position - focusedBall.Position).Unit
-		    local velocityTowardsPlayer = ballVelocity:Dot(directionToPlayer) - playerVelocity:Dot(directionToPlayer)
-		
-		    if velocityTowardsPlayer <= 0 then
-		        return math.huge
-		    end
-		
-		    local distanceToBeCovered = distanceToPlayer - 30
-		    return distanceToBeCovered / velocityTowardsPlayer
-		end
-		
-		local BASE_THRESHOLD = 0.15
-		local VELOCITY_SCALING_FACTOR = 0.002
-		
-		local function getDynamicThreshold(ballVelocityMagnitude)
-		    local adjustedThreshold = BASE_THRESHOLD - (ballVelocityMagnitude * VELOCITY_SCALING_FACTOR)
-		    return math.max(0.12, adjustedThreshold)
-		end
-		
-		local function checkBallDistance()
-		    if character:FindFirstChild("Highlight") then
-		        local charPos = character.PrimaryPart.Position
-		        local charVel = character.PrimaryPart.Velocity
-		
-		        if focusedBall and not focusedBall.Parent then
-		            chooseNewFocusedBall()
-		        end
-		
-		        if not focusedBall then
-		            print("No focused ball found.")
-		            return 
-		        end
-		
-		        local ball = focusedBall
-		        local distanceToPlayer = (ball.Position - charPos).Magnitude
-		
-		        -- Прямое сопоставление радиуса парирования
-		        if distanceToPlayer < 10 then
-		            parryButtonPress:Fire()
-		            return
-		        end
-		
-		        local timeToImpact = timeUntilImpact(ball.Velocity, distanceToPlayer, charVel)
-		        local dynamicThreshold = getDynamicThreshold(ball.Velocity.Magnitude)
-		
-		        if timeToImpact < dynamicThreshold then
-		            parryButtonPress:Fire()
-		        end
-		    else
-		        print("Character does not contain Highlight.")
-		    end
-		end
-		
-		runService.Heartbeat:Connect(function()
-		    checkBallDistance()
-		end)
-  	end    
+	end
 })
