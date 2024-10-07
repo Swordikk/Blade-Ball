@@ -1,6 +1,6 @@
 local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
 
-local Window = OrionLib:MakeWindow({Name = "Script by Swordikk | ⚡Pet Simulator X", HidePremium = false, IntroText = "Script for Gym leagua", SaveConfig = true, IntroEnabled = true, ConfigFolder = "Scripts"})
+local Window = OrionLib:MakeWindow({Name = "Script by Swordikk | ⚡Pet Simulator X", HidePremium = false, IntroText = "Script for Pet Simulator X", SaveConfig = true, IntroEnabled = true, ConfigFolder = "Scripts"})
 
 local Humanoid = game.Players.LocalPlayer.Character.Humanoid
 local HumanoidRootPart = game.Players.LocalPlayer.Character.HumanoidRootPart
