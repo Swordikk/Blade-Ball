@@ -12,10 +12,11 @@ function AutoFarmDiamonds()
 				v.Coin.MeshId == "rbxassetid://13087914804" or 
 				v.Coin.MeshId == "rbxassetid://13087826929" or 
 				v.Coin.MeshId == "rbxassetid://13087884875"or 
-				v.Coin.MeshId == "rbxassetid://6356575794") then
+				v.Coin.MeshId == "rbxassetid://6356575794") then wait(0.5)
                 HumanoidRootPart.CFrame = v.Coin.CFrame
 			else
 				for i, v in pairs(game:GetService("Workspace"):WaitForChild("__THINGS").Lootbags:GetChildren()) do
+					wait(0.5)
 					HumanoidRootPart.CFrame = v.CFrame
 				end
             end
