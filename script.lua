@@ -12,7 +12,7 @@ function AutoFarmDiamonds()
 				v.Coin.MeshId == "rbxassetid://13087914804" or 
 				v.Coin.MeshId == "rbxassetid://13087826929" or 
 				v.Coin.MeshId == "rbxassetid://13087884875"or 
-				v.Coin.MeshId == "rbxassetid://6356575794") then
+				v.Coin.MeshId == "rbxassetid://6356575794") then wait(1)
                 HumanoidRootPart.CFrame = v.Coin.CFrame
 			else
 				for i, v in pairs(game:GetService("Workspace"):WaitForChild("__THINGS").Lootbags:GetChildren()) do
@@ -41,14 +41,13 @@ local Tab = Window:MakeTab({
 	PremiumOnly = false
 })
 
-Tab:AddTextbox({
-	Name = "AutoFarm Diamonds",
-	Default = "",
-	TextDisappear = false,
+Tab:AddToggle({
+	Name = "This is a toggle!",
+	Default = false,
 	Callback = function(Value)
 		_G.AutoFarmDiamonds = Value
 		AutoFarmDiamonds()
-	end
+	end    
 })
 
 local Tab = Window:MakeTab({
