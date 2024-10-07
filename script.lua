@@ -1,6 +1,6 @@
 local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
 
-local Window = OrionLib:MakeWindow({Name = "Script by Swordikk | ⚡Pet Simulator X", HidePremium = false, IntroText = "Script for Pet Simulator X", SaveConfig = true, IntroEnabled = true, ConfigFolder = "Scripts"})
+local Window = OrionLib:MakeWindow({Name = "Script by Swordikk | ⚡Gym leagua", HidePremium = false, IntroText = "Script for Gym leagua", SaveConfig = true, IntroEnabled = true, ConfigFolder = "Scripts"})
 
 local Humanoid = game.Players.LocalPlayer.Character.Humanoid
 local HumanoidRootPart = game.Players.LocalPlayer.Character.HumanoidRootPart
@@ -47,12 +47,6 @@ function JumpPower()
     end
 end
 
-local BarnDoodleEgg = {
-    [1] = "Barn Doodle Egg",
-    [2] = false,
-    [3] = false
-}
-
 local Tab = Window:MakeTab({
 	Name = "AutoFarm",
 	Icon = "rbxassetid://4483362748",
@@ -77,11 +71,10 @@ Tab:AddToggle({
 })
 
 Tab:AddToggle({
-	Name = "Auto Open Eggs",
+	Name = "Auto Claim Gifts",
 	Default = false,
 	Callback = function(Value)
-		_G.AutoOpenEggs = Value
-		AutoOpenEggs()
+		
 	end    
 })
 
