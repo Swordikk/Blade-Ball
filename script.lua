@@ -1,6 +1,6 @@
 local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
 
-local Window = OrionLib:MakeWindow({Name = "Script by Swordikk | ⚡Realistik_Driving_Sinulator", HidePremium = false, IntroText = "Script for Malfoy4ik", SaveConfig = true, IntroEnabled = true, ConfigFolder = "Scripts"})
+local Window = OrionLib:MakeWindow({Name = "Script by Swordikk | ⚡Realistik_Driving_Simulator", HidePremium = false, IntroText = "Script for Malfoy4ik", SaveConfig = true, IntroEnabled = true, ConfigFolder = "Scripts"})
 
 local Humanoid = game.Players.LocalPlayer.Character.Humanoid
 local HumanoidRootPart = game.Players.LocalPlayer.Character.HumanoidRootPart
