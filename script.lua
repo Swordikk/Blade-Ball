@@ -26,7 +26,7 @@ local Tab = Window:MakeTab({
 Tab:AddButton({
 	Name = "AutoFarm Cash/Miles",
 	Callback = function()
-		game.Workspace.PanikPassCar.Body:WaitForChild("#Weight").CFrame = CFrame.new(-1017.6805419921875, 210.262760162353516, 2818.939697265625)
+		--[[game.Workspace.PanikPassCar.Body:WaitForChild("#Weight").CFrame = CFrame.new(-1017.6805419921875, 210.262760162353516, 2818.939697265625)]]--
 		game.Workspace.xMalfoy_STsCar.Body:WaitForChild("#Weight").CFrame = CFrame.new(-1017.6805419921875, 210.262760162353516, 2818.939697265625)
   	end    
 })
