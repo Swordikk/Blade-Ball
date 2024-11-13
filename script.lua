@@ -4,6 +4,7 @@ local Window = OrionLib:MakeWindow({Name = "Script by Swordikk | ⚡Realistik_Dr
 
 local Humanoid = game.Players.LocalPlayer.Character.Humanoid
 local HumanoidRootPart = game.Players.LocalPlayer.Character.HumanoidRootPart
+local Character = game.Players.LocalPlayer.Character
 
 function WalkSpeed()
 	while _G.WalkSpeed do game:GetService("RunService").RenderStepped:wait()
