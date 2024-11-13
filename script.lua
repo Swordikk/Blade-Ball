@@ -34,12 +34,14 @@ Tab:AddButton({
 Tab:AddDropdown({
 	Name = "Spawn Car",
 	Default = "None",
-	Options = {"Favia 500", "Pegasus Nexus", "", ""},
+	Options = {"Favia 500", "Pegasus Nexus", "Devastator 16", "", "", "", "", "", "", ""},
 	Callback = function(Option)
 		if Option == "Favia 500" then
 			game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("SpawnCar"):FireServer("Favia 500")
 		elseif Option == "Pegasus Nexus" then
 			game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("SpawnCar"):FireServer("Pegasus Nexus")
+		elseif Option == "Devastator 16" then
+			game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("SpawnCar"):FireServer("Devastator 16")
 		end
 	end    
 })
