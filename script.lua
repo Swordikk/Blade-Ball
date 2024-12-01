@@ -1,99 +1,118 @@
+loadstring(game:HttpGet("https://raw.githubusercontent.com/zakater5/LuaRepo/main/YBA/v3.lua"))()
+game.CoreGui:WaitForChild("Bitch Boy V3"):Destroy()
+
 local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
 
-local Window = OrionLib:MakeWindow({Name = "Script by Swordikk | ⚡Realistik_Driving_Simulator", HidePremium = false, IntroText = "Script for Malfoy4ik", SaveConfig = true, IntroEnabled = true, ConfigFolder = "Scripts"})
+local Window = OrionLib:MakeWindow({Name = "Script by Swordikk | ⚡️YBA", HidePremium = false, IntroText = "Script for YBA", SaveConfig = true, IntroEnabled = true, ConfigFolder = "Scripts"})
 
-local Humanoid = game.Players.LocalPlayer.Character.Humanoid
-local HumanoidRootPart = game.Players.LocalPlayer.Character.HumanoidRootPart
-local Character = game.Players.LocalPlayer.Character
+local Player = game.Players.LocalPlayer
+local Character = Player.Character or Player.CharacterAdded:Wait()
+local Humanoid = Character:FindFirstChildOfClass("Humanoid")
+local HumanoidRootPart = Character:FindFirstChild("HumanoidRootPart")
 
-function WalkSpeed()
-	while _G.WalkSpeed do game:GetService("RunService").RenderStepped:wait()
-	    Humanoid.WalkSpeed = _G.WalkSpeed
+local LuckyArrow = {
+    [1] = "PurchaseShopItem",
+    [2] = {
+        ["ItemName"] = "1x Lucky Arrow"
+    }
+}
+
+local function getItem(itemName)
+    return Player.Backpack:FindFirstChild(itemName) or Player.Character:FindFirstChild(itemName)
+end
+
+local function AutoItem(itemName)
+    while _G[itemName] do
+        wait(0.01)
+        local item = getItem(itemName)  -- Получаем текущий статус предмета
+        if item then
+            item.Parent = Character  -- Берем предмет в руки
+            wait(1)  -- Ожидание перед продажей или использованием
+            local args = {
+                [1] = "EndDialogue",
+                [2] = {
+                    ["Option"] = "Option2",
+                    ["NPC"] = "Merchant",
+                    ["Dialogue"] = "Dialogue5"
+                }
+            }
+            game:GetService("Players").LocalPlayer.Character.RemoteEvent:FireServer(unpack(args))
+        end
     end
 end
 
-function JumpPower()
-	while _G.JumpPower do game:GetService("RunService").RenderStepped:wait()
-	    Humanoid.JumpPower = _G.JumpPower
-    end
-end
-
+---- Tab Home ----
 local Tab = Window:MakeTab({
-	Name = "AutoFarm",
-	Icon = "rbxassetid://4483362748",
-	PremiumOnly = false
+    Name = "Home",
+    Icon = "rbxassetid://4370345144",
+    PremiumOnly = false
 })
 
-Tab:AddButton({
-	Name = "AutoFarm Cash/Miles",
-	Callback = function()
-		--[[game.Workspace.PanikPassCar.Body:WaitForChild("#Weight").CFrame = CFrame.new(-1017.6805419921875, 210.262760162353516, 2818.939697265625)]]--
-		game.Workspace.xMalfoy_STsCar.Body:WaitForChild("#Weight").CFrame = CFrame.new(-1017.6805419921875, 310.262760162353516, 2818.939697265625)
-  	end    
-})
-
-Tab:AddDropdown({
-	Name = "Spawn Car",
-	Default = "None",
-	Options = {"Favia 500", "Pegasus Nexus", "Devastator 16", "", "", "", "", "", "", ""},
-	Callback = function(Option)
-		if Option == "Favia 500" then
-			game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("SpawnCar"):FireServer("Favia 500")
-		elseif Option == "Pegasus Nexus" then
-			game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("SpawnCar"):FireServer("Pegasus Nexus")
-		elseif Option == "Devastator 16" then
-			game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("SpawnCar"):FireServer("Devastator 16")
-		end
-	end    
-})
-
+---- Tab Farming ----
 local Tab = Window:MakeTab({
-	Name = "Misc",
-	Icon = "rbxassetid://4483362748",
-	PremiumOnly = false
-})
-
-Tab:AddTextbox({
-	Name = "WalkSpeed",
-	Default = "",
-	TextDisappear = false,
-	Callback = function(Value)
-		_G.WalkSpeed = Value
-		WalkSpeed()
-	end
-})
-
-Tab:AddTextbox({
-	Name = "JumpPower",
-	Default = "",
-	TextDisappear = false,
-	Callback = function(Value)
-		_G.JumpPower = Value
-		JumpPower()
-	end
+    Name = "Farming",
+    Icon = "rbxassetid://4483364237",
+    PremiumOnly = false
 })
 
 Tab:AddToggle({
-	Name = "Anti-AFK",
-	Default = false,
-	Callback = function(Value)
-		if Value == true then
-			while not game:IsLoaded() do wait() end
-			repeat wait() until game.Players.LocalPlayer.Character
-			Players = game:GetService("Players")
-			local GC = getconnections or get_signal_cons
-			if GC then
-				for i,v in pairs(GC(Players.LocalPlayer.Idled)) do
-					if v["Disable"] then v["Disable"](v)
-					elseif v["Disconnect"] then v["Disconnect"](v)
-					end
-				end
-			else
-			Players.LocalPlayer.Idled:Connect(function()
-				VirtualUser:CaptureController()
-				VirtualUser:ClickButton2(Vector2.new())
-  				end)
-			end
-		end
-	end
+        Name = "AutoFarm",
+        Default = false,
+        Callback = function(Value)
+		
+  	end    
 })
+
+
+---- Tab Items ----
+local Tab = Window:MakeTab({
+    Name = "Items",
+    Icon = "rbxassetid://4335482575",
+    PremiumOnly = false
+})
+
+local items = {
+    "Rokakaka",
+    "Gold Coin",
+    "Mysterious Arrow",
+    "Diamond",
+    "Rib Cage of The Saint's Corpse",
+    "Pure Rokakaka",
+    "Stone Mask",
+    "Dio's Diary",
+    "Quinton's Glove",
+    "Ancient Scroll",
+    "SteelBallRunWins"
+}
+
+for _, itemName in ipairs(items) do
+    Tab:AddToggle({
+        Name = "Auto Sell " .. itemName,
+        Default = false,
+        Callback = function(Value)
+            _G[itemName] = Value  -- Устанавливаем глобальную переменную для этого предмета
+            if Value then
+                AutoItem(itemName)
+            end
+        end
+    })
+end
+
+---- Tab Misc ----
+local Tab = Window:MakeTab({
+    Name = "Misc",
+    Icon = "",
+    PremiumOnly = false
+})
+
+Tab:AddToggle({
+        Name = "Buy Lucky Arrow",
+        Default = false,
+        Callback = function(Value)
+while Value == true do wait(0.5)
+game:GetService("Players").LocalPlayer.Character.RemoteEvent:FireServer(unpack(LuckyArrow))
+end
+  	end
+})
+
+OrionLib:Init()
